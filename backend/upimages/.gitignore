@@ -31,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Terraform ###
+# Terraform state and sensitive data
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform-provider-*
+
+# Terraform lock file (commented out - uncomment if you want to share lock file with team)
+# .terraform.lock.hcl
+
+
