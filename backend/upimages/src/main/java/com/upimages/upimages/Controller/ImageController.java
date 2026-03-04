@@ -16,19 +16,20 @@ import java.util.Map;
 @ControllerAdvice(value = "/images")
 public class ImageController {
 
-    @Autowired
-    private ImageService service;
+    private final ImageService service;
+
+    public ImageController(ImageService service) {
+        this.service = service;
+    }
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("description") String description) throws Exception {
         service.imageValidation(file);
 
-
+        String key = service.uploadImageToS3(file);
 
         return ResponseEntity.ok(Map.of(
-                "name", file.getOriginalFilename(),
-                "size", file.getSize(),
-                "description", description
+                "key", key
         ));
     }
 }
