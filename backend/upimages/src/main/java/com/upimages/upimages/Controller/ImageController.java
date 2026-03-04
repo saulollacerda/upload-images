@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.util.Map;
 
@@ -19,9 +20,10 @@ public class ImageController {
     private ImageService service;
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file,
-                                        @RequestParam("description") String description) throws Exception {
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("description") String description) throws Exception {
         service.imageValidation(file);
+
+
 
         return ResponseEntity.ok(Map.of(
                 "name", file.getOriginalFilename(),
