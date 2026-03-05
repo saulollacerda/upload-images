@@ -17,12 +17,13 @@ public class ImageService {
 
     private final S3Client s3Client;
 
+    @Value("${aws.s3.bucket-name}")
+    private String bucketName;
+
     public ImageService(S3Client s3Client) {
         this.s3Client = s3Client;
     }
 
-    @Value("${aws.s3.bucket-name}")
-    private String bucketName;
 
     public ImageResponseDTO uploadImageToS3(ImageUploadDTO dto) throws IOException  {
         String key = generateFileName(dto.getFile().getOriginalFilename());
