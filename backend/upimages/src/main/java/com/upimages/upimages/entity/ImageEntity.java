@@ -18,10 +18,16 @@ public class ImageEntity {
 
     @ManyToOne()
     @JoinColumn(name = "id_user")
-    private User user;
+    private UserEntity user;
 
     public ImageEntity() {}
-    public ImageEntity(String s3Key, String originalFileName, Long fileSize, LocalDateTime uploadDate, User user) {}
+    public ImageEntity(String s3Key, String originalFileName, Long fileSize, LocalDateTime uploadDate, UserEntity user) {
+        this.s3Key = s3Key;
+        this.originalFileName = originalFileName;
+        this.fileSize = fileSize;
+        this.uploadDate = uploadDate;
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -63,11 +69,11 @@ public class ImageEntity {
         this.uploadDate = uploadDate;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 }

@@ -1,7 +1,6 @@
 package com.upimages.upimages.entity;
 
 import jakarta.persistence.*;
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +25,12 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL)
     private List<ImageEntity> images;
 
-    public User() {}
-    public User(String username, String email, String password) {}
+    public UserEntity() {}
+    public UserEntity(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -67,12 +70,12 @@ public class User implements UserDetails {
     }
 
     @Override
-    public @Nullable String getPassword() {
-        return "";
+    public String getPassword() {
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.email;
     }
 }
