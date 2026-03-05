@@ -1,17 +1,14 @@
 package com.upimages.upimages.controller;
 
+import com.upimages.upimages.dto.ImageResponseDTO;
+import com.upimages.upimages.dto.ImageUploadDTO;
 import com.upimages.upimages.service.ImageService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@ControllerAdvice(value = "/images")
+@RequestMapping(value = "/images")
 public class ImageController {
 
     private final ImageService service;
@@ -21,13 +18,9 @@ public class ImageController {
     }
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("description") String description) throws Exception {
-        service.imageValidation(file);
+    public ResponseEntity<ImageResponseDTO> uploadImage(@Valid @ModelAttribute ImageUploadDTO dto) throws Exception {
+        ImageResponseDTO dtoResponse = service.uploadImageToS3(dto);
 
-        String key = service.uploadImageToS3(file);
-
-        return ResponseEntity.ok(Map.of(
-                "key", key
-        ));
+        return ResponseEntity.ok().body(dtoResponse);
     }
 }
