@@ -1,14 +1,12 @@
-package com.upimages.upimages.Controller;
+package com.upimages.upimages.controller;
 
-import com.upimages.upimages.Service.ImageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.upimages.upimages.service.ImageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.services.s3.S3Client;
 
 import java.util.Map;
 

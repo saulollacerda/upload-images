@@ -1,4 +1,4 @@
-package com.upimages.upimages.Config;
+package com.upimages.upimages.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
