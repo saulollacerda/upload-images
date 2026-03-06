@@ -2,6 +2,7 @@ package com.upimages.upimages.entity;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -22,6 +23,8 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
+    private String role;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<ImageEntity> images;
 
@@ -30,6 +33,7 @@ public class UserEntity implements UserDetails {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = "USER";
     }
 
     public Long getId() {
@@ -64,9 +68,17 @@ public class UserEntity implements UserDetails {
         this.images = images;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.role));
     }
 
     @Override
