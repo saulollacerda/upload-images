@@ -12,7 +12,6 @@ public class ImageUploadDTO {
     @NotNull
     private MultipartFile file;
 
-    @NotBlank
     @Size(max = 255)
     private String description;
 
@@ -24,6 +23,7 @@ public class ImageUploadDTO {
         this.file = file;
         this.description = description;
         this.uploadDate = uploadDate;
+
     }
 
     public MultipartFile getFile() {

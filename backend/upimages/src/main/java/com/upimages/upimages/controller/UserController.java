@@ -1,6 +1,7 @@
 package com.upimages.upimages.controller;
 
 import com.upimages.upimages.entity.UserEntity;
+import com.upimages.upimages.service.JwtService;
 import com.upimages.upimages.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,25 +12,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public UserController(AuthenticationManager authenticationManager, UserService userService) {
+    public UserController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
         Authentication authenticationRequest =
                 UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.email(), loginRequest.password());
         Authentication authenticationResponse =
                 this.authenticationManager.authenticate(authenticationRequest);
-        return ResponseEntity.ok().build();
+
+        String token = jwtService.generateToken(authenticationResponse.getName());
+
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PostMapping("/register")
