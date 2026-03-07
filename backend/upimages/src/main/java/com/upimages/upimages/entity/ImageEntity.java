@@ -1,10 +1,12 @@
 package com.upimages.upimages.entity;
 
+import com.upimages.upimages.dto.ImageResponseDTO;
+import com.upimages.upimages.dto.ImageUploadDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "tb_image")
 public class ImageEntity {
 
     @Id
@@ -21,11 +23,12 @@ public class ImageEntity {
     private UserEntity user;
 
     public ImageEntity() {}
-    public ImageEntity(String s3Key, String originalFileName, Long fileSize, LocalDateTime uploadDate, UserEntity user) {
-        this.s3Key = s3Key;
-        this.originalFileName = originalFileName;
-        this.fileSize = fileSize;
-        this.uploadDate = uploadDate;
+
+    public ImageEntity(ImageUploadDTO imageUploadDTO, ImageResponseDTO imageResponseDTO, UserEntity user) {
+        this.s3Key = imageResponseDTO.getKey();
+        this.originalFileName = imageUploadDTO.getFile().getOriginalFilename();
+        this.fileSize = imageUploadDTO.getFile().getSize();
+        this.uploadDate = imageResponseDTO.getUploadedAt();
         this.user = user;
     }
 

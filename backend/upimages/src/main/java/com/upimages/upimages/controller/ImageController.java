@@ -20,6 +20,7 @@ public class ImageController {
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
     public ResponseEntity<ImageResponseDTO> uploadImage(@Valid @ModelAttribute ImageUploadDTO dto) throws Exception {
         ImageResponseDTO dtoResponse = service.uploadImageToS3(dto);
+        service.insertImage(dto, dtoResponse);
 
         return ResponseEntity.ok().body(dtoResponse);
     }

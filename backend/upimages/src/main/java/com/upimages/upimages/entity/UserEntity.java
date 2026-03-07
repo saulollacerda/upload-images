@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class UserEntity implements UserDetails {
 
     private String role;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ImageEntity> images;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<ImageEntity> images = new ArrayList<>();
 
     public UserEntity() {}
     public UserEntity(String username, String email, String password) {
