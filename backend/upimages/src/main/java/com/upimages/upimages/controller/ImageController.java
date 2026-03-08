@@ -24,4 +24,11 @@ public class ImageController {
 
         return ResponseEntity.ok().body(dtoResponse);
     }
+
+    @GetMapping(path = "/{key}")
+    public ResponseEntity<String> getImage(@PathVariable String key) {
+        String url = service.getPresignedImage(key);
+
+        return ResponseEntity.ok().body(url);
+    }
 }
