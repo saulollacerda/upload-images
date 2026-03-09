@@ -6,6 +6,7 @@ import com.upimages.upimages.entity.ImageEntity;
 import com.upimages.upimages.entity.UserEntity;
 import com.upimages.upimages.repository.ImageRepository;
 import com.upimages.upimages.repository.UserRepository;
+import com.upimages.upimages.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -73,7 +74,7 @@ public class ImageService {
     }
 
     public void deleteImage (Long id) {
-        ImageEntity imageEntity = imageRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id.toString()));
+        ImageEntity imageEntity = imageRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 
         String key = imageEntity.getS3Key();
 
