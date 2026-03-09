@@ -26,9 +26,15 @@ public class ImageController {
     }
 
     @GetMapping(path = "/{key}")
-    public ResponseEntity<String> getImage(@PathVariable String key) {
+    public ResponseEntity<String> getPresignedImage(@PathVariable String key) {
         String url = service.getPresignedImage(key);
 
         return ResponseEntity.ok().body(url);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deleteImage(@PathVariable Long id) {
+        service.deleteImage(id);
+        return ResponseEntity.ok().body("Image deleted");
     }
 }

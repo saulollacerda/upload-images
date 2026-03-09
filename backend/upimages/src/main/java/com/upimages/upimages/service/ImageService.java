@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -69,6 +70,22 @@ public class ImageService {
         ImageEntity imageEntity = new ImageEntity(imageUploadDTO, imageResponseDTO, user);
 
         imageRepository.save(imageEntity);
+    }
+
+    public void deleteImage (Long id) {
+        ImageEntity imageEntity = imageRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id.toString()));
+
+        String key = imageEntity.getS3Key();
+
+        DeleteObjectRequest deleteObjectRequest =
+                DeleteObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(key)
+                        .build();
+
+        s3Client.deleteObject(deleteObjectRequest);
+
+        imageRepository.delete(imageEntity);
     }
 
     public String getPresignedImage(String key) {
