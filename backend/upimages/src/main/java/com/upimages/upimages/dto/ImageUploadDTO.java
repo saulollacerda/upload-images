@@ -1,5 +1,6 @@
 package com.upimages.upimages.dto;
 
+import com.upimages.upimages.annotation.ValidFile;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
 
 public class ImageUploadDTO {
 
-    @NotNull
+    @ValidFile
     private MultipartFile file;
 
     @Size(max = 255)
