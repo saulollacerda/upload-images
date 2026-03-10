@@ -454,17 +454,6 @@ O bucket S3 é provisionado com as seguintes proteções:
 
 ---
 
-## 🛡️ Considerações de Segurança
-
-> ⚠️ **Atenção:** Antes de tornar este repositório público, certifique-se de:
-
-1. **Não expor credenciais AWS** — Nunca commite `~/.aws/credentials` ou chaves de acesso no código
-2. **Rotacionar a chave JWT** — Se a chave padrão do `application.properties` já foi commitada, gere uma nova e use-a via variável de ambiente `JWT_SECRET`
-3. **Não expor o nome real do bucket S3** — Use variáveis de ambiente para injetar o nome do bucket em produção
-4. **Usar HTTPS em produção** — Tokens JWT trafegam nos headers HTTP e podem ser interceptados em conexões não seguras
-5. **Remover o H2 Console em produção** — A rota `/h2-console` está liberada publicamente e não deve estar acessível em ambientes produtivos
-
----
 
 ## 📄 Licença
 
